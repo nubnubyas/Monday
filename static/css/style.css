@@ -7,7 +7,7 @@ body {
 header {
 	background-color: #333;
 	color: #fff;
-	/* padding: 10px; */
+	padding: 10px;
 }
 
 nav {
@@ -34,36 +34,40 @@ nav a:hover {
 	text-decoration: underline;
 }
 
-/* main {
-	margin: 20px;
-} */
+main {
+	/* margin: 20px; */
+}
 
 h1, h2, h3, p {
 	margin: 0;
+	padding-bottom: 5px;
 }
 
 #hero {
-	background-image: url("hero.jpg");
+	background-image: url("../../images/heropic.jpg");
 	background-size: cover;
-	color: #434040;
-	padding: 100px;
+	color: #f8eeee;
+	padding: 10%;
 	text-align: center;
 }
 
 #hero h2 {
 	font-size: 48px;
-	margin-bottom: 20px;
+	padding-top: 20px;
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 #hero p {
 	font-size: 24px;
+	padding-bottom: 20px;
 	margin-bottom: 40px;
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 .button {
-	background-color: #fff;
+	background-color: #333;
 	border: none;
-	color: #333;
+	color: #fff;
 	cursor: pointer;
 	display: inline-block;
 	font-size: 18px;
@@ -73,22 +77,23 @@ h1, h2, h3, p {
 }
 
 .button:hover {
-	background-color: #333;
 	color: #fff;
+	background-color: #676c69;
 }
 
 #groups {
-	margin-top: 50px;
+	/* margin-top: 30px; */
+	background-color: azure;
 }
 
 #groups h2 {
 	font-size: 36px;
-	margin-bottom: 20px;
+	padding: 15px;
 }
 
 #groups ul {
 	list-style: none;
-	margin: 0;
+	margin: 15px;
 	padding: 0;
 }
 
@@ -101,7 +106,9 @@ h1, h2, h3, p {
 
 #groups img {
 	display: block;
-	height: auto;
+	padding: 5px;
+	/* height: 200px; Set the desired height for the images
+	object-fit:fill; Maintain aspect ratio */
 	max-width: 100%;
 }
 

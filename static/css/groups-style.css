@@ -1,4 +1,3 @@
-/* Import your existing CSS file here */
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
@@ -9,6 +8,11 @@ header {
 	background-color: #333;
 	color: #fff;
 	padding: 10px;
+}
+
+h1, h2, h3, p {
+	margin: 0;
+	padding-bottom: 5px;
 }
 
 nav {
