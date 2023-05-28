@@ -1,0 +1,146 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+}
+
+nav {
+	display: inline-block;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+nav a {
+	color: #fff;
+	text-decoration: none;
+}
+
+nav a:hover {
+	text-decoration: underline;
+}
+
+main {
+	margin: 20px;
+}
+
+h1, h2, h3, p {
+	margin: 0;
+}
+
+#hero {
+	background-image: url("hero.jpg");
+	background-size: cover;
+	color: #fff;
+	padding: 100px;
+	text-align: center;
+}
+
+#hero h2 {
+	font-size: 48px;
+	margin-bottom: 20px;
+}
+
+#hero p {
+	font-size: 24px;
+	margin-bottom: 40px;
+}
+
+.button {
+	background-color: #fff;
+	border: none;
+	color: #333;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 18px;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.button:hover {
+	background-color: #333;
+	color: #fff;
+}
+
+#groups {
+	margin-top: 50px;
+}
+
+#groups h2 {
+	font-size: 36px;
+	margin-bottom: 20px;
+}
+
+#groups ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#groups li {
+	display: inline-block;
+	margin-right: 20px;
+	vertical-align: top;
+	width: 30%;
+}
+
+#groups img {
+	display: block;
+	height: auto;
+	max-width: 100%;
+}
+
+#groups h3 {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+#groups p {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+#groups .members {
+	display: block;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+#questionnaire {
+	background-color: #f0f0f0;
+	color: #333;
+	padding: 50px;
+	text-align: center;
+}
+
+#questionnaire h2 {
+	font-size: 36px;
+	margin-bottom: 20px;
+}
+
+#questionnaire p {
+	font-size: 18px;
+	margin-bottom: 40px;
+}
+
+footer {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Travel Planning Questionnaire</title>
+	<link rel="stylesheet" type="text/css" href="questionnaire-style.css">
+	<script type="text/javascript" src="questionnaire-script.js"></script>
+</head>
+<body>
+	<header>
+		<h1>Travel Planning Questionnaire</h1>
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="group.html">Groups</a></li>
+				<li><a href="questionnaire.html">Questionnaire</a></li>
+				<li><a href="login.html">Login</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<form id="questionnaire-form">
+			<h2>Tell us about your travel preferences</h2>
+			<p>Please answer the following questions to help us plan your perfect trip.</p>
+			<fieldset>
+				<legend>Accommodation</legend>
+				<div>
+					<label for="accommodation-type">What type of accommodation do you prefer?</label>
+					<select id="accommodation-type" name="accommodation-type">
+						<option value="">Select an option</option>
+						<option value="hotel">Hotel</option>
+						<!-- continued from previous message -->
+
+						<option value="hostel">Hostel</option>
+						<option value="airbnb">Airbnb</option>
+					</select>
+				</div>
+				<div>
+					<label for="accommodation-price">What is your budget per night for accommodation?</label>
+					<input type="range" id="accommodation-price" name="accommodation-price" min="0" max="1000" step="50" value="500">
+					<span id="accommodation-price-output">$500</span>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Transportation</legend>
+				<div>
+					<label for="transportation-mode">What is your preferred mode of transportation?</label>
+					<select id="transportation-mode" name="transportation-mode">
+						<option value="">Select an option</option>
+						<option value="plane">Plane</option>
+						<option value="train">Train</option>
+						<option value="bus">Bus</option>
+						<option value="car">Car</option>
+					</select>
+				</div>
+				<div>
+					<label for="transportation-budget">What is your budget for transportation?</label>
+					<input type="range" id="transportation-budget" name="transportation-budget" min="0" max="1000" step="50" value="500">
+					<span id="transportation-budget-output">$500</span>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Activities</legend>
+				<div>
+					<label for="activity-type">What type of activities do you enjoy?</label>
+					<input type="checkbox" id="activity-type-1" name="activity-type" value="beach">
+					<label for="activity-type-1">Beach</label>
+					<input type="checkbox" id="activity-type-2" name="activity-type" value="hiking">
+					<label for="activity-type-2">Hiking</label>
+					<input type="checkbox" id="activity-type-3" name="activity-type" value="sightseeing">
+					<label for="activity-type-3">Sightseeing</label>
+					<input type="checkbox" id="activity-type-4" name="activity-type" value="shopping">
+					<label for="activity-type-4">Shopping</label>
+				</div>
+				<div>
+					<label for="activity-budget">What is your budget for activities?</label>
+					<input type="range" id="activity-budget" name="activity-budget" min="0" max="1000" step="50" value="500">
+					<span id="activity-budget-output">$500</span>
+				</div>
+			</fieldset>
+		continued from previous message:
+
+			<fieldset>
+				<legend>Destination</legend>
+				<div>
+					<label for="destination-continent">Which continent would you like to visit?</label>
+					<select id="destination-continent" name="destination-continent">
+						<option value="">Select a continent</option>
+						<option value="north-america">North America</option>
+						<option value="south-america">South America</option>
+						<option value="europe">Europe</option>
+						<option value="asia">Asia</option>
+						<option value="africa">Africa</option>
+						<option value="australia">Australia</option>
+					</select>
+				</div>
+				<div>
+					<label for="destination-country">Which country would you like to visit?</label>
+					<select id="destination-country" name="destination-country">
+						<option value="">Select a country</option>
+						<option value="united-states">United States</option>
+						<option value="canada">Canada</option>
+						<option value="mexico">Mexico</option>
+						<option value="brazil">Brazil</option>
+						<option value="argentina">Argentina</option>
+						<option value="france">France</option>
+						<option value="germany">Germany</option>
+						<option value="italy">Italy</option>
+						<option value="japan">Japan</option>
+						<option value="china">China</option>
+						<option value="egypt">Egypt</option>
+						<option value="south-africa">South Africa</option>
+						<option value="australia">Australia</option>
+					</select>
+				</div>
+				<div>
+					<label for="destination-budget">What is your budget for the trip?</label>
+					<input type="range" id="destination-budget" name="destination-budget" min="0" max="10000" step="500" value="5000">
+					<span id="destination-budget-output">$5000</span>
+				</div>
+			</fieldset>
+			<button type="submit">Submit</button>
+		</form>
+	</main>
+	<footer>
+		<p>&copy; 2023 Travel Planning Website. All rights reserved.</p>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,41 @@
+/* Import your existing CSS file here */
+
+/* Additional styles for the login page */
+main {
+  max-width: 400px;
+  margin: 2em auto;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin: 0.5em 0;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+button[type="submit"] {
+  padding: 0.5em 1em;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #444;
+}
