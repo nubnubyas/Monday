@@ -1,0 +1,273 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+}
+
+nav {
+	display: inline-block;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+nav a {
+	color: #fff;
+	text-decoration: none;
+}
+
+nav a:hover {
+	text-decoration: underline;
+}
+
+main {
+	margin: 20px;
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+h1, h2, h3, p {
+	margin: 0;
+}
+
+#hero {
+	background-image: url("hero.jpg");
+	background-size: cover;
+	color: #fff;
+	padding: 100px;
+	text-align: center;
+}
+
+#hero h2 {
+	font-size: 48px;
+	margin-bottom: 20px;
+}
+
+#hero p {
+	font-size: 24px;
+	margin-bottom: 40px;
+}
+
+.button {
+	background-color: #fff;
+	border: none;
+	color: #333;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 18px;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.button:hover {
+	background-color: #333;
+	color: #fff;
+}
+
+#groups {
+	margin-top: 50px;
+}
+
+#groups h2 {
+	font-size: 36px;
+	margin-bottom: 20px;
+}
+
+#groups ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#groups li {
+	display: inline-block;
+	margin-right: 20px;
+	vertical-align: top;
+	width: 30%;
+}
+
+#groups img {
+	display: block;
+	height: auto;
+	max-width: 100%;
+}
+
+#groups h3 {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+#groups p {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+#groups .members {
+	display: block;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+#questionnaire {
+	background-color: #f0f0f0;
+	color: #333;
+	padding: 50px;
+	text-align: center;
+}
+
+#questionnaire h2 {
+	font-size: 36px;
+	margin-bottom: 20px;
+}
+
+#questionnaire p {
+	font-size: 18px;
+	margin-bottom: 40px;
+}
+
+form {
+	background-color: #f0f0f0;
+	padding: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+fieldset {
+	border: none;
+	margin-bottom: 20px;
+	padding: 0;
+}
+
+legend{
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+select {
+	display: block;
+	font-size: 16px;
+	padding: 5px;
+	width: 100%;
+}
+
+input[type="range"] {
+	display: block;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: #333;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+	background-color: #ccc;
+	border-radius: 5px;
+	height: 5px;
+}
+
+#accommodation-price-output, #transportation-budget-output, #activity-budget-output, #destination-budget-output {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+button[type="submit"] {
+	background-color: #333;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	padding: 10px 20px;
+}
+
+button[type="submit"]:hover {
+	background-color: #555;
+}
+
+.group {
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.group img {
+	float: left;
+	margin-right: 10px;
+}
+
+.group h3 {
+	margin-top: 0;
+}
+
+.group-info {
+	margin-top: 10px;
+}
+
+.group-info p {
+	margin: 0;
+}
+
+footer {
+	background-color: #333;
+	color:#fff;
+	padding: 10px;
+	text-align: center;
+}
+
+/* Additional styles for the login page */
+main {
+	max-width: 400px;
+	margin: 2em auto;
+	padding: 1em;
+	background-color: #fff;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+input[type="text"],
+input[type="password"] {
+	padding: 0.5em;
+	border: 1px solid #ccc;
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+nav li a {
+	color: #fff;
+	text-decoration: none;
+}

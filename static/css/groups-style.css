@@ -1,7 +1,18 @@
+/* Import your existing CSS file here */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
 header {
 	background-color: #333;
 	color: #fff;
 	padding: 10px;
+}
+
+nav {
+	display: inline-block;
 }
 
 nav ul {
@@ -12,12 +23,16 @@ nav ul {
 
 nav li {
 	display: inline-block;
-	margin-right: 20px;
+	margin-left: 20px;
 }
 
-nav li a {
+nav a {
 	color: #fff;
 	text-decoration: none;
+}
+
+nav a:hover {
+	text-decoration: underline;
 }
 
 main {

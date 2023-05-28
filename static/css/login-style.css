@@ -1,12 +1,52 @@
 /* Import your existing CSS file here */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+}
+
+nav {
+	display: inline-block;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+nav a {
+	color: #fff;
+	text-decoration: none;
+}
+
+nav a:hover {
+	text-decoration: underline;
+}
 
 /* Additional styles for the login page */
-main {
+
+/* main {
   max-width: 400px;
   margin: 2em auto;
   padding: 1em;
   background-color: #fff;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+} */
+
+main {
+	margin: 20px;
 }
 
 form {
@@ -23,19 +63,20 @@ input[type="text"],
 input[type="password"] {
   padding: 0.5em;
   border: 1px solid #ccc;
-  width: 100%;
+  width: 50%;
   margin-bottom: 1em;
 }
 
 button[type="submit"] {
   padding: 0.5em 1em;
-  background-color: #333;
-  color: #fff;
+  color: #1a0f0f;
+  background-color: #f5e9e9;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-  background-color: #444;
+  color: #dfd6d6;
+  background-color: #8de1b1;
 }
