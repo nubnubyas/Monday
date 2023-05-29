@@ -21,9 +21,9 @@
 					</select>
 				</div>
 				<div>
-					<label for="accommodation-price">What is your budget per night for accommodation?</label>
-					<input type="range" id="accommodation-price" name="accommodation-price" min="0" max="1000" step="50" value="500">
-					<span id="accommodation-price-output">$500</span>
+					<label for="accommodation-price">What is your budget for accomodation?</label>
+          <input type="number" id="accommodation-price" name="accommodation-price" min="0" max="10000" step="50" value="5000">
+          <span id="destination-budget-output"></span>
 				</div>
 			</fieldset>
 			<fieldset>
@@ -40,8 +40,8 @@
 				</div>
 				<div>
 					<label for="transportation-budget">What is your budget for transportation?</label>
-					<input type="range" id="transportation-budget" name="transportation-budget" min="0" max="1000" step="50" value="500">
-					<span id="transportation-budget-output">$500</span>
+          <input type="number" id="transportation-budget" name="transportation-budget" min="0" max="10000" step="50" value="5000">
+          <span id="destination-budget-output"></span>
 				</div>
 			</fieldset>
 			<fieldset>
@@ -59,8 +59,8 @@
 				</div>
 				<div>
 					<label for="activity-budget">What is your budget for activities?</label>
-					<input type="range" id="activity-budget" name="activity-budget" min="0" max="1000" step="50" value="500">
-					<span id="activity-budget-output">$500</span>
+          <input type="number" id="activity-budget" name="activity-budget" min="0" max="10000" step="50" value="5000">
+          <span id="destination-budget-output"></span>
 				</div>
 			</fieldset>
 			<fieldset>
@@ -100,8 +100,8 @@
 				</div>
 				<div>
 					<label for="destination-budget">What is your budget for the trip?</label>
-					<input type="range" id="destination-budget" name="destination-budget" min="0" max="10000" step="500" value="5000">
-					<span id="destination-budget-output">$5000</span>
+          <input type="number" id="destination-budget" name="destination-budget" min="0" max="10000" step="50" value="5000">
+          <span id="destination-budget-output"></span>
 				</div>
 			</fieldset>
 			<button type="submit">Submit</button>
