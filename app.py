@@ -1,57 +1,167 @@
 import os
 
 from flask import Flask, flash, redirect, render_template, request, session
-from database import db, User, Group, UserGroupPreference
+# from database import db, User, Group, UserGroupPreference
 from enum import Enum
+import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
 
-user = User(id = 1, username="testname", password="testpw")
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
-# db = SQLAlchemy(app)
+# init Object classes and establish relationships
+class User:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        self.preferences = []
 
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String(50), nullable=False)
-#     password = db.Column(db.String(50), nullable=False)
-#     groups = db.relationship('Group', secondary=user_groups, backref='users')
+class Group:
+    def __init__(self, name, password):
+        self.name = name
+        self.password = password
+        self.users = []
+        self.activities = []
+        self.accommodations = []
 
-# class TravelActivities(Enum):
-#     HIKING = 'Hiking'
-#     SIGHTSEEING = 'Sightseeing'
-#     BEACH = 'Beach'
+class Activity:
+    def __init__(self, name):
+        self.name = name
 
-# class Accommodation(Enum):
-#     HOTEL = 'Hotel'
-#     AIRBNB = 'Airbnb'
-#     HOSTEL = 'Hostel'
+class Accommodation:
+    def __init__(self, name):
+        self.name = name
 
-# class Group(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     travel_activities = db.Column(db.Enum(TravelActivities), nullable=False)
-#     accommodation = db.Column(db.Enum(Accommodation), nullable=False)
-#     budget = db.Column(db.Float, nullable=False)
+class UserPreference:
+    def __init__(self, user, group, accommodation_preference, budget_preference, travel_style_preference):
+        self.user = user
+        self.group = group
+        self.accommodation_preference = accommodation_preference
+        self.budget_preference = budget_preference
+        self.travel_style_preference = travel_style_preference
 
-# class UserGroupPreference(db.Model):
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-#     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
-#     travel_activities = db.Column(db.Enum(TravelActivities), nullable=False)
-#     accommodation = db.Column(db.Enum(Accommodation), nullable=False)
-#     budget = db.Column(db.Float, nullable=False)
-#     user = db.relationship('User', backref=db.backref('group_preferences', cascade='all, delete-orphan'))
-#     group = db.relationship('Group', backref=db.backref('user_preferences', cascade='all, delete-orphan'))
+# create a connection to the database (or create the database if it doesn't exist)
+conn = sqlite3.connect('mydatabase.db')
 
-# # Define a many-to-many relationship between users and groups
-# user_groups = db.Table('user_groups',
-#     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-#     db.Column('group_id', db.Integer, db.ForeignKey('group.id'), primary_key=True)
-# )
+# create a cursor object to execute SQL queries
+cursor = conn.cursor()
+
+# Create tables
+cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL,
+                    password TEXT NOT NULL)''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS groups (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    password TEXT NOT NULL)''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS users_groups (
+                    user_id INTEGER,
+                    group_id INTEGER,
+                    FOREIGN KEY (user_id) REFERENCES users (id),
+                    FOREIGN KEY (group_id) REFERENCES groups (id)
+                )''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS activities (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    group_id INTEGER,
+                    FOREIGN KEY (group_id) REFERENCES groups (id))''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS accommodations (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    group_id INTEGER,
+                    FOREIGN KEY (group_id) REFERENCES groups (id))''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS user_preferences (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER,
+                    group_id INTEGER,
+                    accommodation_preference TEXT,
+                    budget_preference REAL,
+                    travel_style_preference TEXT,
+                    FOREIGN KEY (user_id) REFERENCES users (id),
+                    FOREIGN KEY (group_id) REFERENCES groups (id))''')
+
+# Insert data
+def insert_user(user):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (user.username, user.password))
+    user.id = cursor.lastrowid
+    conn.commit()
+    conn.close()
+
+def insert_group(group):
+    cursor.execute("INSERT INTO groups (name, password) VALUES (?, ?)", (group.name, group.password))
+    group.id = cursor.lastrowid
+    for user in group.users:
+        cursor.execute("INSERT INTO users_groups (user_id, group_id) VALUES (?, ?)", (user.id, group.id))
+    for activity in group.activities:
+        cursor.execute("INSERT INTO activities (name, group_id) VALUES (?, ?)", (activity.name, group.id))
+
+def insert_user_preference(user_preference):
+    cursor.execute("INSERT INTO user_preferences (user_id, group_id, accommodation_preference, budget_preference, travel_style_preference) VALUES (?, ?, ?, ?, ?)", 
+                   (user_preference.user.id, user_preference.group.id, user_preference.accommodation_preference, 
+                    user_preference.budget_preference, user_preference.travel_style_preference))
+    user_preference.id = cursor.lastrowid
+
+# Create objects
+user1 = User("John", "password1")
+user2 = User("Jane", "password2")
+
+group1 = Group("Group 1", "group1password")
+group2 = Group("Group 2", "group2password")
+
+activity1 = Activity("Activity 1")
+activity2 = Activity("Activity 2")
+
+accommodation1 = Accommodation("Accommodation 1")
+accommodation2 = Accommodation("Accommodation 2")
+
+preference1 = UserPreference(user1, group1, "Hotel", 100, "Luxury")
+preference2 = UserPreference(user2, group1, "Apartment", 50, "Budget")
+
+# Establish relationships
+group1.users.append(user1)
+group1.users.append(user2)
+group1.activities.append(activity1)
+group1.activities.append(activity2)
+group1.accommodations.append(accommodation1)
+group1.accommodations.append(accommodation2)
+
+user1.preferences.append(preference1)
+user2.preferences.append(preference2)
+
+# Insert data into the database
+# insert_user(user1)
+# insert_user(user2)
+# insert_group(group1)
+# insert_group(group2)
+# insert_user_preference(preference1)
+# insert_user_preference(preference2)
+
+# Commit changes
+conn.commit()
+conn.close()
+    
+    # sequence of code to add to update the table
+    # conn = sqlite3.connect('database.db')
+    # cursor = conn.cursor()
+
+    # # Perform the database operations
+    # # ...
+
+    # # Commit the changes
+    # conn.commit()
+
+    # # Close the connection
+    # conn.close()
+
 
 @app.route("/")
 def home():
@@ -59,7 +169,16 @@ def home():
 
 @app.route("/group", methods=["GET", "POST"])
 def group():
-    return render_template("group.html")
+    if request.method == "POST":
+
+        name = request.form.get("group-name")
+        pw = request.form.get("group-password")
+        group = Group(name, pw)
+        insert_group(group)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("group.html")
 
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
@@ -67,10 +186,19 @@ def questionnaire():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    if request.method == "POST":
 
+        username = request.form.get("username")
+        pw = request.form.get("password")
+        user = User(username, pw)
+        insert_user(user)
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
