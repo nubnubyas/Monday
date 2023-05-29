@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Travel Planning - Groups</title>
-	<link rel="stylesheet" type="text/css" href="../static/css/groups-style.css">
-</head>
-<body>
-	<header>
-		<h1>Travel Planning</h1>
-		<nav>
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="group.html">Groups</a></li>
-				<li><a href="questionnaire.html">Questionnaire</a></li>
-				<li><a href="login.html">Login</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main>
+{% extends "layout.html" %}
+
+{% block title %}
+    Groups
+{% endblock %}
+
+{% block main %}
 		<h2>Join or Create a Group</h2>
 		<p>Enter the Group ID and password to join an existing group, or create a new group for your next adventure.</p>
-		<form>
+		<form >
 			<fieldset>
 				<legend>Join a group</legend>
 				<label for="group-id">Group ID</label>
@@ -48,12 +36,12 @@
 		<p>Or share the group link:</p>
 		<div class="group-link">
 			<input type="text" id="link" value="https://example.com/group?id=12345">
-			<button type="button" onclick="copyLink()">Copy Link</button>
+			<button type="submit" onclick="copyLink()">Copy Link</button>
 		</div>
 		
 		<h2>My Groups</h2>
-		<div class="group">
-			<img src="group-image.jpg" alt="Group Image">
+		<section id="groups">
+			<img src="{{ url_for('static', filename='images/kl.jpg') }}" alt="Group 2">
 			<h3>Group Name</h3>
 			<p>Description of the group and the trip. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</pContinued:
 
@@ -61,24 +49,18 @@
 				<p><strong>Destination:</strong> Destination Name</p>
 				<p><strong>Date:</strong> June 1, 2023 - June 15, 2023</p>
 				<p><strong>Price:</strong> $2000 per person</p>
-				<button type="button" onclick="joinGroup(12345)">Join Group</button>
+				<button type="submit" onclick="joinGroup(12345)">Join Group</button>
 			</div>
-		</div>
-		<div class="group">
-			<img src="group-image.jpg" alt="Group Image">
+			<img src="{{ url_for('static', filename='images/kl.jpg') }}" alt="Group 2">
 			<h3>Group Name</h3>
 			<p>Description of the group and the trip. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 			<div class="group-info">
 				<p><strong>Destination:</strong> Destination Name</p>
 				<p><strong>Date:</strong> June 1, 2023 - June 15, 2023</p>
 				<p><strong>Price:</strong> $2000 per person</p>
-				<button type="button" onclick="joinGroup(67890)">Join Group</button>
+				<button type="submit" onclick="joinGroup(67890)">Join Group</button>
 			</div>
-		</div>
-	</main>
-	<footer>
-		<p>&copy; 2023 Travel Planning</p>
-	</footer>
+		</section>
 
 	<script>
 		function joinGroup() {
@@ -103,6 +85,4 @@
 			alert("Link copied to clipboard!");
 		}
 	</script>
-
-</body>
-</html>
+{% endblock %}

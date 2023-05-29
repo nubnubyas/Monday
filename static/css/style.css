@@ -34,9 +34,9 @@ nav a:hover {
 	text-decoration: underline;
 }
 
-main {
-	/* margin: 20px; */
-}
+/* main {
+	margin: 20px;
+} */
 
 h1, h2, h3, p {
 	margin: 0;
@@ -44,7 +44,7 @@ h1, h2, h3, p {
 }
 
 #hero {
-	background-image: url("../../images/heropic.jpg");
+	background-image: url("{{ url_for('static', filename='images/heropic.jpg') }}");
 	background-size: cover;
 	color: #f8eeee;
 	padding: 10%;

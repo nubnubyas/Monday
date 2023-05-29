@@ -1,29 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Login</title>
-	<link rel="stylesheet" type="text/css" href="../static/css/login-style.css">
-</head>
-<body>
-	<header>
-		<h1>Travel Planning Website</h1>
-		<nav>
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="group.html">Groups</a></li>
-				<li><a href="questionnaire.html">Questionnaire</a></li>
-				<li><a href="login.html">Login</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main>
-		<form id="login-form">
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block main %}
+	<section id="login">
+		<form id="login-form" action="/login" method="post">
 			<label for="username">Username</label>
 			<input type="text" id="username" name="username" required>
 			<label for="password">Password</label>
 			<input type="password" id="password" name="password" required>
-			<button type="submit"><a href="index.html">Login</a></button>
+			<button type="submit"><a href="/">Login</a></button>
 		</form>
-	</main>
-</body>
-</html>
+	</section>
+{% endblock %}

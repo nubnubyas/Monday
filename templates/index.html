@@ -1,34 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Monday</title>
-	<link rel="stylesheet" type="text/css" href="../static/css/style.css">
-	<script type="text/javascript" src="../static/js/script.js"></script>
-</head>
-<body>
-	<header>
-		<h1>Travel Planning Website</h1>
-		<nav>
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="group.html">Groups</a></li>
-				<li><a href="questionnaire.html">Questionnaire</a></li>
-				<li><a href="login.html">Login</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main>
-		<section id="hero">
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+{% block main %}
+	<section id="index">
+		<section id="hero">			
 			<h2>Plan your next adventure with us</h2>
 			<p>Join a group or create your own</p>
-			<a href="group.html" class="button">Get started</a>
+			<a href="/group" class="button">Get started</a>
 		</section>
 		<section id="groups">
 			<h2>Your Groups</h2>
 			<ul>
 				<li>
 					<a href="#">
-						<img src="../images/japan.jpg" alt="Group 1">
+						<img src="{{ url_for('static', filename='images/japan.jpg') }}" alt="Group 1">
 						<h3>Japan</h3>
 						<p>Description of Japan</p>
 					<span class="members">5 members</span>
@@ -36,7 +23,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<img src="../images/kl.jpg" alt="Group 2">
+						<img src="{{ url_for('static', filename='images/kl.jpg') }}" alt="Group 2">
 						<h3>Impromptu KL</h3>
 						<p>Lfg...</p>
 						<span class="members">10 members</span>
@@ -44,7 +31,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<img src="../images/paris.jpg" alt="Group 3">
+						<img src="{{ url_for('static', filename='images/paris.jpg') }}" alt="Group 3">
 						<h3>Paris</h3>
 						<p>Description of Paris</p>
 						<span class="members">3 members</span>
@@ -57,9 +44,5 @@
 			<p>Answer a few questions to help us plan your perfect trip</p>
 			<a href="questionnaire.html" class="button">Start questionnaire</a>
 		</section>
-	</main>
-	<footer>
-		<p>&copy; 2023 Travel Planning Website. All rights reserved.</p>
-	</footer>
-</body>
-</html>
+	</section>
+{% endblock %}

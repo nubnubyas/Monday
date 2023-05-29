@@ -31,3 +31,27 @@ accommodationPriceInput.addEventListener('input', () => {
 
 const transportationBudgetInput = document.getElementById('transportation-budget');
 const transportationBudgetOutput = document.getElementById('transportation-budget');
+
+function joinGroup() {
+	var groupId = document.getElementById("group-id").value;
+	var password = document.getElementById("password").value;
+	// TODO: Implement logic to join the group with the given ID and password
+	alert(`You are now a member of group ${groupId}!`);
+}
+
+function createGroup() {
+	var groupName = document.getElementById("group-name").value;
+	var destination = document.getElementById("destination").value;
+	var date = document.getElementById("date").value;
+	var groupPassword = document.getElementById("group-password").value;
+	// TODO: Implement logic to create a new group with the given information
+	alert(`Group "${groupName}" created successfully!`);
+}
+
+function copyLink() {
+	var link = document.getElementById("link");
+	link.select();
+	link.setSelectionRange(0, 99999);
+	document.execCommand("copy");
+	alert("Link copied to clipboard!");
+}

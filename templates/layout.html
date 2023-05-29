@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Monday: {% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/combined.css">
+	<script type="text/javascript" src="../static/js/script.js"></script>
+</head>
+<body>
+	<header>
+		<h1>Travel Planning Website</h1>
+		<nav>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/group">Groups</a></li>
+				<li><a href="/questionnaire">Questionnaire</a></li>
+				<li><a href="/login">Login</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+        {% block main %}{% endblock %}
+	</main>
+	<footer>
+		<p>&copy; 2023 Travel Planning Website. All rights reserved.</p>
+	</footer>
+</body>
+</html>
