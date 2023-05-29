@@ -1,14 +1,19 @@
 import os
 
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 # from database import db, User, Group, UserGroupPreference
 from enum import Enum
+from flask_session import Session
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 # init Object classes and establish relationships
 class User:
@@ -34,12 +39,17 @@ class Accommodation:
         self.name = name
 
 class UserPreference:
-    def __init__(self, user, group, accommodation_preference, budget_preference, travel_style_preference):
-        self.user = user
-        self.group = group
-        self.accommodation_preference = accommodation_preference
-        self.budget_preference = budget_preference
-        self.travel_style_preference = travel_style_preference
+    def __init__(self, userid, groupid, accommodationType, accommodationPrice, transportationMode, transportationBudget, activityType, activityBudget, destinationCountry, destinationBudget):
+        self.user = userid
+        self.group = groupid
+        self.accommodationType = accommodationType 
+        self.accommodationPrice = accommodationPrice 
+        self.transportationMode = transportationMode 
+        self.transportationBudget = transportationBudget 
+        self.activityType = activityType 
+        self.activityBudget = activityBudget 
+        self.destinationCountry = destinationCountry 
+        self.destinationBudget = destinationBudget
 
 # create a connection to the database (or create the database if it doesn't exist)
 conn = sqlite3.connect('mydatabase.db')
@@ -58,6 +68,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS groups (
                     name TEXT NOT NULL,
                     password TEXT NOT NULL)''')
 
+# not rly used
 cursor.execute('''CREATE TABLE IF NOT EXISTS users_groups (
                     user_id INTEGER,
                     group_id INTEGER,
@@ -79,13 +90,18 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS accommodations (
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS user_preferences (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
-                    group_id INTEGER,
-                    accommodation_preference TEXT,
-                    budget_preference REAL,
-                    travel_style_preference TEXT,
-                    FOREIGN KEY (user_id) REFERENCES users (id),
-                    FOREIGN KEY (group_id) REFERENCES groups (id))''')
+                    userid INTEGER,
+                    groupid INTEGER,
+                    accommodationType TEXT,
+                    accommodationPrice REAL,
+                    transportationMode TEXT,
+                    transportationBudget REAL,
+                    activityType TEXT,
+                    activityBudget REAL,
+                    destinationCountry TEXT,
+                    destinationBudget REAL,
+                    FOREIGN KEY (userid) REFERENCES users (id),
+                    FOREIGN KEY (groupid) REFERENCES groups (id))''')
 
 # Insert data
 def insert_user(user):
@@ -93,24 +109,33 @@ def insert_user(user):
     cursor = conn.cursor()
     cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (user.username, user.password))
     user.id = cursor.lastrowid
+    a = user.id
     conn.commit()
     conn.close()
+    return a
 
 def insert_group(group):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
     cursor.execute("INSERT INTO groups (name, password) VALUES (?, ?)", (group.name, group.password))
     group.id = cursor.lastrowid
+    a = group.id
     for user in group.users:
         cursor.execute("INSERT INTO users_groups (user_id, group_id) VALUES (?, ?)", (user.id, group.id))
     for activity in group.activities:
         cursor.execute("INSERT INTO activities (name, group_id) VALUES (?, ?)", (activity.name, group.id))
+    conn.commit()
+    conn.close()
+    return a
 
 def insert_user_preference(user_preference):
-    cursor.execute("INSERT INTO user_preferences (user_id, group_id, accommodation_preference, budget_preference, travel_style_preference) VALUES (?, ?, ?, ?, ?)", 
-                   (user_preference.user.id, user_preference.group.id, user_preference.accommodation_preference, 
-                    user_preference.budget_preference, user_preference.travel_style_preference))
+    cursor.execute("INSERT INTO user_preferences (userid, groupid, accommodationType, accommodationPrice, transportationMode, transportationBudget, activityType, activityBudget, destinationCountry, destinationBudget) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+                   (user_preference.userid, user_preference.groupid, user_preference.accommodationType, 
+                    user_preference.accommodationPrice, user_preference.transportationMode, user_preference.transportationBudget, user_preference.activityType, user_preference.activityBudget, 
+                    user_preference.destinationCountry, user_preference.destinationBudget))
     user_preference.id = cursor.lastrowid
 
-# Create objects
+# Create objects for reference (to be removed)
 user1 = User("John", "password1")
 user2 = User("Jane", "password2")
 
@@ -123,8 +148,8 @@ activity2 = Activity("Activity 2")
 accommodation1 = Accommodation("Accommodation 1")
 accommodation2 = Accommodation("Accommodation 2")
 
-preference1 = UserPreference(user1, group1, "Hotel", 100, "Luxury")
-preference2 = UserPreference(user2, group1, "Apartment", 50, "Budget")
+# preference1 = UserPreference(user1, group1, "Hotel", 100, "Luxury")
+# preference2 = UserPreference(user2, group1, "Apartment", 50, "Budget")
 
 # Establish relationships
 group1.users.append(user1)
@@ -134,8 +159,8 @@ group1.activities.append(activity2)
 group1.accommodations.append(accommodation1)
 group1.accommodations.append(accommodation2)
 
-user1.preferences.append(preference1)
-user2.preferences.append(preference2)
+# user1.preferences.append(preference1)
+# user2.preferences.append(preference2)
 
 # Insert data into the database
 # insert_user(user1)
@@ -170,20 +195,39 @@ def home():
 @app.route("/group", methods=["GET", "POST"])
 def group():
     if request.method == "POST":
-
+        user_id = session.get("user_id")
         name = request.form.get("group-name")
         pw = request.form.get("group-password")
         group = Group(name, pw)
-        insert_group(group)
-
+        group_id = insert_group(group)
+        print(user_id)
+        print(group_id)
+        return redirect(url_for('questionnaire', group_id = group_id))
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("group.html")
 
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
-    return render_template("questionnaire.html")
-
+    user_id = session.get("user.id")
+    group_id = request.args.get('group_id')
+    print(user_id)
+    print(group_id)
+    if request.method == "POST":
+        accommodation_type = request.form['accommodation-type']
+        accommodation_price = int(request.form['accommodation-price'])
+        transportation_mode = request.form['transportation-mode']
+        transportation_budget = int(request.form['transportation-budget'])
+        activity_type = request.form.getlist('activity-type')
+        activity_budget = int(request.form['activity-budget'])
+        destination_country = request.form['destination-country']
+        destination_budget = int(request.form['destination-budget'])
+        p = UserPreference(user_id, group_id, accommodation_type, accommodation_price, transportation_mode, transportation_budget, activity_type, activity_budget, destination_country, destination_budget)
+        insert_user_preference(p)
+        return redirect(url_for('home', user_id = user_id, group_id = group_id))
+    else :
+        return render_template("questionnaire.html")
+    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -191,10 +235,11 @@ def login():
         username = request.form.get("username")
         pw = request.form.get("password")
         user = User(username, pw)
-        insert_user(user)
-
+        user_id = insert_user(user)
+        session["user_id"] = user_id
+        print(session.get("user_id"))
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/group")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:

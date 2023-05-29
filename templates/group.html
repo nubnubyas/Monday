@@ -18,17 +18,15 @@
 			</fieldset>
 		</form>
 		<hr>
-		<form>
+		<form action="/group" method="post">
 			<fieldset>
 				<legend>Create a new group</legend>
-				<form id="login-form" action="/group" method="post">
-					<label for="username">Group Name</label>
-					<input type="text" id="username" name="group-name" required>
-					<label for="password">Group Password</label>
-					<input type="password" id="password" name="group-password" required>
-					<button type="submit" onclick="createGroup()">Create Group</button>
-				</form>
-				
+				<input type="hidden" name="user_id" value="{{ user_id }}">
+				<label for="group-name">Group Name</label>
+				<input type="text" id="group-name" name="group-name" required>
+				<label for="group-password">Group Password</label>
+				<input type="password" id="group-password" name="group-password" required>
+				<button type="submit" onclick="createGroup()">Create Group</button>
 			</fieldset>
 		</form>
 		<p>Or share the group link:</p>
