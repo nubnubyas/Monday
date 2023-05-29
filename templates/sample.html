@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Your Group
+{% endblock %}
+
+{% block main %}
+<section id="login">
+    
+    <img src="{{ url_for('static', filename='images/kl.jpg') }}" alt="Travel destination" class="card-image">
+    <div class="card-details">
+      <h2 class="card-title">KL</h2>
+      <p class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac fermentum arcu. Sed gravida, est sit amet ornare hendrerit, elit elit eleifend nisl, vel blandit nibh quam ac mauris.</p>
+      <div class="accommodation">
+        <input type="checkbox" id="myCheckbox" name="myCheckbox" value="checked" checked>
+            <label for="myCheckbox">preferred</label>
+            <hr>
+        <img src="{{ url_for('static', filename='images/hotel.jpg') }}" alt="Accommodation" class="accommodation-image">
+        <div class="accommodation-details">
+          <h3 class="accommodation-title">Accommodation 1</h3>
+          <p class="accommodation-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac fermentum arcu. Sed gravida, est sit amet ornare hendrerit, elit elit eleifend nisl, vel blandit nibh quam ac mauris.</p>
+          <ul class="amenities">
+            <li>Free Wi-Fi</li>
+            <li>Swimming pool</li>
+            <li>Gym</li>
+         </ul>
+         
+
+            <input type="checkbox" id="myCheckbox" name="myCheckbox" value="unchecked" disabled>
+            <label for="myCheckbox">not preferred</label>
+            <hr>
+        </div>
+      </div>
+      <div class="accommodation">
+        <img src="{{ url_for('static', filename='images/airbnb.jpg') }}" alt="Accommodation" class="accommodation-image">
+        <div class="accommodation-details">
+          <h3 class="accommodation-title">Accommodation 2</h3>
+          <p class="accommodation-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac fermentum arcu. Sed gravida, est sit amet ornare hendrerit, elit elit eleifend nisl, vel blandit nibh quam ac mauris.</p>
+          <ul class="amenities">
+            <li>Free breakfast</li>
+            <li>Spa</li>
+            <li>Room service</li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}

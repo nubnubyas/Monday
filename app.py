@@ -40,8 +40,8 @@ class Accommodation:
 
 class UserPreference:
     def __init__(self, userid, groupid, accommodationType, accommodationPrice, transportationMode, transportationBudget, activityType, activityBudget, destinationCountry, destinationBudget):
-        self.user = userid
-        self.group = groupid
+        self.userid = userid
+        self.groupid = groupid
         self.accommodationType = accommodationType 
         self.accommodationPrice = accommodationPrice 
         self.transportationMode = transportationMode 
@@ -129,11 +129,15 @@ def insert_group(group):
     return a
 
 def insert_user_preference(user_preference):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
     cursor.execute("INSERT INTO user_preferences (userid, groupid, accommodationType, accommodationPrice, transportationMode, transportationBudget, activityType, activityBudget, destinationCountry, destinationBudget) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
                    (user_preference.userid, user_preference.groupid, user_preference.accommodationType, 
                     user_preference.accommodationPrice, user_preference.transportationMode, user_preference.transportationBudget, user_preference.activityType, user_preference.activityBudget, 
                     user_preference.destinationCountry, user_preference.destinationBudget))
     user_preference.id = cursor.lastrowid
+    conn.commit()
+    conn.close()
 
 # Create objects for reference (to be removed)
 user1 = User("John", "password1")
@@ -192,39 +196,39 @@ conn.close()
 def home():
     return render_template("index.html")
 
+@app.route("/sample")
+def sample():
+    return render_template("sample.html")
+
 @app.route("/group", methods=["GET", "POST"])
 def group():
     if request.method == "POST":
-        user_id = session.get("user_id")
+        user_id = 1
         name = request.form.get("group-name")
         pw = request.form.get("group-password")
         group = Group(name, pw)
         group_id = insert_group(group)
-        print(user_id)
-        print(group_id)
-        return redirect(url_for('questionnaire', group_id = group_id))
+        return redirect("/questionnaire")
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("group.html")
 
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
-    user_id = session.get("user.id")
-    group_id = request.args.get('group_id')
-    print(user_id)
-    print(group_id)
     if request.method == "POST":
+        user_id = 1
+        group_id = 1
         accommodation_type = request.form['accommodation-type']
         accommodation_price = int(request.form['accommodation-price'])
         transportation_mode = request.form['transportation-mode']
         transportation_budget = int(request.form['transportation-budget'])
-        activity_type = request.form.getlist('activity-type')
+        activity_type = request.form.getlist('activity-type').pop(0)
         activity_budget = int(request.form['activity-budget'])
         destination_country = request.form['destination-country']
         destination_budget = int(request.form['destination-budget'])
         p = UserPreference(user_id, group_id, accommodation_type, accommodation_price, transportation_mode, transportation_budget, activity_type, activity_budget, destination_country, destination_budget)
         insert_user_preference(p)
-        return redirect(url_for('home', user_id = user_id, group_id = group_id))
+        return redirect("/")
     else :
         return render_template("questionnaire.html")
     
