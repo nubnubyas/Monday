@@ -1,20 +1,16 @@
 # Monday TripTogether
 
-Table of Contents
-Introduction
-Setup Instructions
-Prerequisites
-Installation
-Database Setup
-Running the Application
-Contributing
-License
+- [TripTogether](#triptogether)
+- [Setup](#setup)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running](#running)
 
 
-## TripTogether Web App
+## TripTogether
 Welcome to the TripTogether Web App! This application allows users to plan and organize trips together. It is built using HTML, CSS, JavaScript, Python, Flask, SQLite3, and Git.
 
-## Setup Instructions
+## Setup 
 To set up the TripTogether Web App on your local machine, please follow the steps below:
 
 ## Prerequisites
@@ -23,7 +19,7 @@ Make sure you have the following installed:
 Python (version 3.6 or higher)
 Git
 
-##Installation
+## Installation
 Clone the repository:
 
 ```$ git clone https://github.com/nubnubyas/Monday```
@@ -39,7 +35,7 @@ Install the required Python packages:
 
 Optionally, if you want to view the database using SQLite3Viewer, download and install SQLite3Viewer from https://sqlitebrowser.org/.
 
-## Running the Application
+## Running 
 Start the Flask development server:
 
 ```$ python app.py```
