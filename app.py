@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for
-# from database import db, User, Group, UserGroupPreference
 from enum import Enum
 from flask_session import Session
 import sqlite3
@@ -9,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
+# init app
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["SESSION_PERMANENT"] = False
@@ -103,7 +103,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS user_preferences (
                     FOREIGN KEY (userid) REFERENCES users (id),
                     FOREIGN KEY (groupid) REFERENCES groups (id))''')
 
-# Insert data
+# Insert user data
 def insert_user(user):
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
@@ -114,6 +114,7 @@ def insert_user(user):
     conn.close()
     return a
 
+# Insert group data
 def insert_group(group):
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
@@ -128,6 +129,7 @@ def insert_group(group):
     conn.close()
     return a
 
+# Insert data for user preferences
 def insert_user_preference(user_preference):
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
@@ -139,67 +141,21 @@ def insert_user_preference(user_preference):
     conn.commit()
     conn.close()
 
-# Create objects for reference (to be removed)
-user1 = User("John", "password1")
-user2 = User("Jane", "password2")
-
-group1 = Group("Group 1", "group1password")
-group2 = Group("Group 2", "group2password")
-
-activity1 = Activity("Activity 1")
-activity2 = Activity("Activity 2")
-
-accommodation1 = Accommodation("Accommodation 1")
-accommodation2 = Accommodation("Accommodation 2")
-
-# preference1 = UserPreference(user1, group1, "Hotel", 100, "Luxury")
-# preference2 = UserPreference(user2, group1, "Apartment", 50, "Budget")
-
-# Establish relationships
-group1.users.append(user1)
-group1.users.append(user2)
-group1.activities.append(activity1)
-group1.activities.append(activity2)
-group1.accommodations.append(accommodation1)
-group1.accommodations.append(accommodation2)
-
-# user1.preferences.append(preference1)
-# user2.preferences.append(preference2)
-
-# Insert data into the database
-# insert_user(user1)
-# insert_user(user2)
-# insert_group(group1)
-# insert_group(group2)
-# insert_user_preference(preference1)
-# insert_user_preference(preference2)
-
 # Commit changes
 conn.commit()
 conn.close()
-    
-    # sequence of code to add to update the table
-    # conn = sqlite3.connect('database.db')
-    # cursor = conn.cursor()
 
-    # # Perform the database operations
-    # # ...
-
-    # # Commit the changes
-    # conn.commit()
-
-    # # Close the connection
-    # conn.close()
-
-
+# routing to home page
 @app.route("/")
 def home():
     return render_template("index.html")
 
+# routing to sample group page
 @app.route("/sample")
 def sample():
     return render_template("sample.html")
 
+# routing to group page with group creation and group joining
 @app.route("/group", methods=["GET", "POST"])
 def group():
     if request.method == "POST":
@@ -213,6 +169,7 @@ def group():
     else:
         return render_template("group.html")
 
+# routing to questionnaire page to collect user preferences
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
     if request.method == "POST":
@@ -231,7 +188,8 @@ def questionnaire():
         return redirect("/")
     else :
         return render_template("questionnaire.html")
-    
+   
+# routing to login page to login as a registered user
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -242,7 +200,7 @@ def login():
         user_id = insert_user(user)
         session["user_id"] = user_id
         print(session.get("user_id"))
-        # Redirect user to home page
+        # Redirect user to group page to create a new group page
         return redirect("/group")
 
     # User reached route via GET (as by clicking a link or via redirect)
